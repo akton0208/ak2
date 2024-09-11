@@ -123,8 +123,8 @@ stop_aleominer() {
 # Display menu
 while true; do
     echo "Choose an option:"
-    echo "1. Install Aleo F2Pool Miner"
-    echo "2. Run aleominer"
+    echo "1. Install Aleo F2Pool Miner with netcap"
+    echo "2. Run aleominer with monitor function"
     echo "3. Tail log (tail -f aleominer.log)"
     echo "4. Stop aleominer"
     echo "5. Run aleominer with auto-restart every 30 minutes"
