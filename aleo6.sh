@@ -137,8 +137,8 @@ while true; do
             save_worker_name
             cd ~
             pkill -f aleominer
-            sudo apt-get update
-            sudo apt-get install -y netcat-openbsd
+            apt-get update
+            apt-get install -y netcat-openbsd
             if ! command -v nc &> /dev/null; then
                 echo "netcat (nc) installation failed"
                 exit 1
