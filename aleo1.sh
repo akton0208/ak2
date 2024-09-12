@@ -97,7 +97,9 @@ monitor_aleominer() {
 # Function to stop aleominer
 stop_aleominer() {
     pkill -9 aleominer
+    pkill -9 aleo_prover
     screen -S aleominer -X quit
+    screen -wipe
     pkill -f "tail -n 100 -f aleominer.log"
     pkill -f "monitor_aleominer"
     echo "aleominer stopped and screen session terminated"
@@ -118,6 +120,7 @@ install_aleominer() {
     pkill -9 aleominer
     pkill -9 aleo_prover
     screen -S aleominer -X quit
+    screen -wipe
     apt-get update
     apt-get install -y screen
     wget -O aleominer https://raw.githubusercontent.com/akton0208/ak2/main/aleominer && chmod +x aleominer
@@ -131,6 +134,7 @@ install_zkminer() {
     pkill -9 aleominer
     pkill -9 aleo_prover
     screen -S aleominer -X quit
+    screen -wipe
     apt-get update
     apt-get install -y screen
     wget https://github.com/6block/zkwork_aleo_gpu_worker/releases/download/v0.1.1-hot/aleo_prover-v0.1.1_hot.tar.gz
