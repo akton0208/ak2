@@ -106,7 +106,7 @@ stop_aleominer() {
 # Function to view hashrate log
 view_hashrate_log() {
     if [ -f hashrate.log ]; then
-        cat hashrate.log
+        tail -f hashrate.log
     else
         echo "hashrate.log does not exist."
     fi
