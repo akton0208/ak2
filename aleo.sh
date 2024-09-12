@@ -98,7 +98,7 @@ monitor_aleominer() {
 stop_aleominer() {
     pkill -9 aleominer
     screen -S aleominer -X quit
-    pkill -f "tail -f aleominer.log"
+    pkill -f "tail -n 100 -f aleominer.log"
     pkill -f "monitor_aleominer"
     echo "aleominer stopped and screen session terminated"
 }
@@ -106,7 +106,7 @@ stop_aleominer() {
 # Function to view hashrate log
 view_hashrate_log() {
     if [ -f hashrate.log ]; then
-        tail -f hashrate.log
+        tail -n 100 -f hashrate.log
     else
         echo "hashrate.log does not exist."
     fi
