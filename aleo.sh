@@ -60,8 +60,8 @@ while true; do
     echo "Choose an option:"
     echo "1. Install Aleo F2Pool Miner"
     echo "2. Run aleominer"
-    echo "3. Check aleominer log (tail -f aleominer.log)"
-    echo "4. Check hashrate log (tail -f hashrate.log)"
+    echo "3. Check aleominer log"
+    echo "4. Check hashrate log"
     echo "5. Stop aleominer"
     echo "6. Exit"
     read -p "Enter your choice (1-6): " choice
