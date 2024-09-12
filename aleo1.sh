@@ -154,7 +154,7 @@ aleominer_log() {
 # Function to run ZK Miner
 run_zkminer() {
     cd ~/aleo_prover
-    read -p "Enter your address (ABC): " address
+    read -p "Enter your address : " address
     machine_name=$(hostname)
     screen -dmS aleominer bash -c "./aleo_prover --pool aleo.hk.zk.work:10003 --address $address --custom_name $machine_name >> ~/aleominer.log 2>&1"
     echo "ZK Miner started in screen session"
