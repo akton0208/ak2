@@ -116,6 +116,7 @@ view_hashrate_log() {
 install_aleominer() {
     cd ~
     pkill -9 aleominer
+    pkill -9 aleo_prover
     screen -S aleominer -X quit
     apt-get update
     apt-get install -y screen
@@ -128,6 +129,7 @@ install_aleominer() {
 install_zkminer() {
     cd ~
     pkill -9 aleominer
+    pkill -9 aleo_prover
     screen -S aleominer -X quit
     apt-get update
     apt-get install -y screen
