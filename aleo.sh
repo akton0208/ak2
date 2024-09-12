@@ -83,11 +83,23 @@ run_aleominer() {
     log_hashrate
 }
 
+# Function to monitor and restart aleominer if it stops
+monitor_aleominer() {
+    while true; do
+        if ! pgrep -f "aleominer" > /dev/null; then
+            echo "aleominer stopped, restarting..."
+            run_aleominer
+        fi
+        sleep 60
+    done
+}
+
 # Function to stop aleominer
 stop_aleominer() {
     pkill -9 aleominer
     screen -S aleominer -X quit
     pkill -f "tail -f aleominer.log"
+    pkill -f "monitor_aleominer"
     echo "aleominer stopped and screen session terminated"
 }
 
@@ -126,6 +138,7 @@ while true; do
             pkill -9 aleominer
             screen -S aleominer -X quit
             run_aleominer
+            monitor_aleominer &
             ;;
         3)
             if [ -f aleominer.log ]; then
