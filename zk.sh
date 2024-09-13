@@ -12,7 +12,7 @@ address=$1
 # Get GPU model and count
 gpu_info=$(nvidia-smi --query-gpu=name --format=csv,noheader)
 gpu_count=$(echo "$gpu_info" | wc -l)
-gpu_model=$(echo "$gpu_info" | head -n 1)
+gpu_model=$(echo "$gpu_info" | head -n 1 | grep -oP '\d{4}')  # Extract the numeric part of the model
 
 # Get the machine name
 hostname=$(hostname)
@@ -22,6 +22,15 @@ gpu_summary="${gpu_count}X${gpu_model}_${hostname}"
 
 # Define your command
 command="./aleo_prover --pool aleo.asia1.zk.work:10003 --address $address --custom_name $gpu_summary"
+
+# Display the final command
+echo "Final command: $command"
+
+# Start the command initially
+$command &
+
+# Short delay before the first check
+sleep 10
 
 # Monitoring loop
 while true; do
