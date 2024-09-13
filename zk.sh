@@ -1,32 +1,35 @@
 #!/bin/bash
 
-# 檢查是否提供了地址參數
+# Check if the address parameter is provided
 if [ -z "$1" ]; then
-    echo "請提供地址參數，例如：./zk.sh aleo16vqvtd0kr2fupv5rahhxw3hfyc9dc63k6447lee7z4y5ezp4gqys6un25m"
+    echo "Please provide an address parameter, e.g., ./zk.sh aleo16vqvtd0kr2fupv5rahhxw3hfyc9dc63k6447lee7z4y5ezp4gqys6un25m"
     exit 1
 fi
 
-# 獲取地址參數
+# Get the address parameter
 address=$1
 
-# 獲取GPU型號和數量
+# Get GPU model and count
 gpu_info=$(nvidia-smi --query-gpu=name --format=csv,noheader)
 gpu_count=$(echo "$gpu_info" | wc -l)
 gpu_model=$(echo "$gpu_info" | head -n 1)
 
-# 格式化為 "數量X型號"
-gpu_summary="${gpu_count}X${gpu_model}"
+# Get the machine name
+hostname=$(hostname)
 
-# 定義你的命令
+# Format as "countXmodel_hostname"
+gpu_summary="${gpu_count}X${gpu_model}_${hostname}"
+
+# Define your command
 command="./aleo_prover --pool aleo.asia1.zk.work:10003 --address $address --custom_name $gpu_summary"
 
-# 監控循環
+# Monitoring loop
 while true; do
-    # 檢查進程是否在運行
+    # Check if the process is running
     if ! pgrep -f "$command" > /dev/null; then
-        echo "進程已停止，正在重啟..."
+        echo "Process has stopped, restarting..."
         $command &
     fi
-    # 每隔60秒檢查一次
+    # Check every 60 seconds
     sleep 60
 done
