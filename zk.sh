@@ -20,8 +20,22 @@ hostname=$(hostname)
 # Format as "countXmodel_hostname"
 gpu_summary="${gpu_count}X${gpu_model}_${hostname}"
 
+# Define pool addresses
+pool1="aleo.asia1.zk.work:10003"
+pool2="aleo.hk.zk.work:10003"
+current_pool=$pool1
+
+# Function to switch pools
+switch_pool() {
+    if [ "$current_pool" == "$pool1" ]; then
+        current_pool=$pool2
+    else
+        current_pool=$pool1
+    fi
+}
+
 # Define your command
-command="./aleo_prover --pool aleo.asia1.zk.work:10003 --address $address --custom_name $gpu_summary"
+command="./aleo_prover --pool $current_pool --address $address --custom_name $gpu_summary"
 
 # Display the final command
 echo "Final command: $command"
@@ -36,7 +50,10 @@ sleep 10
 while true; do
     # Check if the process is running
     if ! pgrep -f "$command" > /dev/null; then
-        echo "Process has stopped, restarting..."
+        echo "Process has stopped, switching pool and restarting..."
+        switch_pool
+        command="./aleo_prover --pool $current_pool --address $address --custom_name $gpu_summary"
+        echo "New command: $command"
         $command &
     fi
     # Check every 60 seconds
